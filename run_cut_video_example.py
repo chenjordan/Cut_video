@@ -11,13 +11,16 @@ if __name__ == "__main__":
     # define the cut video period
     CUT_PERIOD = 10
 
+    # define each output video's duration
+    DURATION = 1
+
     # define output video root folder
     out_root_folder = './test_cut_output/'
 
     # define in_video_path, the program will convert all mp4 file under this folder
     in_video_path = './tmp_video/*.mp4'
 
-    cut_class = Cut_video(in_video_path, out_root_folder, NUM_PROCESS, CUT_PERIOD)
+    cut_class = Cut_video(in_video_path, out_root_folder, NUM_PROCESS, CUT_PERIOD, DURATION)
 
     cut_class.pre_processing()
 

@@ -9,11 +9,12 @@ from glob import glob
 
 class Cut_video:
 
-    def __init__(self, in_video_path, out_root_folder, NUM_PROCESS, CUT_PERIOD):
+    def __init__(self, in_video_path, out_root_folder, NUM_PROCESS, CUT_PERIOD, DURATION):
         self.in_video_path = in_video_path
         self.out_root_folder = out_root_folder
         self.NUM_PROCESS = NUM_PROCESS
         self.CUT_PERIOD = CUT_PERIOD
+        self.DURATION = DURATION
 
         # for each worker usage
         self.queue = multiprocessing.Queue()
@@ -33,8 +34,9 @@ class Cut_video:
 
 
     def worker(self):
-        period = time.strftime('%H:%M:%S', time.gmtime(self.CUT_PERIOD))
-        print period
+
+        # convert duration to "%H:%M:%S" time format
+        duration = time.strftime('%H:%M:%S', time.gmtime(self.DURATION))
 
         while not self.queue.empty():
             task_name = self.queue.get()
@@ -62,7 +64,7 @@ class Cut_video:
                 # generate output file name
                 out_file = out_folder + '/' + file_name +'_' + str(j) + '.mp4'
                 b_time = time.strftime('%H:%M:%S', time.gmtime(j))
-                cut_cmd = 'ffmpeg -i ' + task_name + ' -ss ' + b_time + ' -t ' + period + ' ' + out_file
+                cut_cmd = 'ffmpeg -i ' + task_name + ' -ss ' + b_time + ' -t ' + duration + ' ' + out_file
                 print cut_cmd
                 rc = subprocess.Popen(cut_cmd, shell=True)
                 rc.wait()
