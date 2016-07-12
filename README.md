@@ -1,7 +1,7 @@
 #Cut_video
 
 ## Synopsis
-parse videos under input video path and then cut video by cut period parameter
+parse videos under input video path and then cut video each CUT_PERIOD seconds 
 
 ## File note
 cut_video.py: class to cut video per CUT_PERIOD seconds
